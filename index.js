@@ -1,8 +1,9 @@
 var camera, scene, renderer;
-var geometry= new Array();
-var material= new Array(); 
-var mesh= new Array();
+var geometry = new Array();
+var material = new Array();
+var mesh = new Array();
 var a1, a2, flag1, flag2, value;
+var light, l, flag3;
 
 init();
 
@@ -14,6 +15,7 @@ function init() {
   flag2 = true;
   a1 = 0;
   a2 = 0.5;
+  l = 0.3;
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -24,8 +26,7 @@ function init() {
   geometry[2] = new THREE.SphereGeometry(0.35, 8, 16);
   geometry[3] = new THREE.SphereGeometry(0.25, 8, 8);
 
-  for(var i=0;i<4;i++)
-  {
+  for (var i = 0; i < 4; i++) {
     material[i] = new THREE.MeshStandardMaterial({
       wireframe: true,
     });
@@ -34,7 +35,7 @@ function init() {
     scene.add(mesh[i]);
   }
 
-  var light = new THREE.DirectionalLight("RGB(255, 255,0)", 1.2);
+  light = new THREE.DirectionalLight("RGB(255, 255,0)", 1.2);
   light.position.set(1, 1, 1);
   scene.add(light);
 
@@ -66,6 +67,13 @@ function animate() {
     a2 -= value;
     if (a2 <= 0) flag2 = true;
   }
+  if (flag3) {
+    l += value;
+    if (l >= 1.2) flag3 = false;
+  } else {
+    l -= value;
+    if (l <= 0.3) flag3 = true;
+  }
 
   requestAnimationFrame(animate);
   mesh[0].rotation.x += 0.0005;
@@ -84,7 +92,9 @@ function animate() {
   mesh[3].rotation.z += 0.01;
   material[3].opacity = 1 - a2;
 
+  light.intensity = l;
+
   renderer.render(scene, camera);
 
-  console.log(a1 + "  " + a2);
+  console.log(a1 + "  " + a2 + "  " + l);
 }
