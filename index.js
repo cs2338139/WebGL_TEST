@@ -3,23 +3,18 @@ var geometry, material, mesh;
 var geometry2, material2, mesh2;
 var geometry3, material3, mesh3;
 var geometry4, material4, mesh4;
-var r, g, b, flag, value;
-var r2, g2, b2, flag2;
+var a1, a2, flag1, flag2, value;
 
 init();
 
 function init() {
   scene = new THREE.Scene();
   value = 0.005;
-  r = 0;
-  g = 0;
-  b = 0;
-  flag = true;
 
-  r2 = 0.5;
-  g2 = 0.5;
-  b2 = 0.5;
+  flag1 = true;
   flag2 = true;
+  a1 = 0;
+  a2 = 0.5;
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -29,6 +24,7 @@ function init() {
   material = new THREE.MeshStandardMaterial({
     wireframe: true,
   });
+  material.transparent = true;
   mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
 
@@ -36,6 +32,7 @@ function init() {
   material2 = new THREE.MeshStandardMaterial({
     wireframe: true,
   });
+  material.transparent = true;
   mesh2 = new THREE.Mesh(geometry2, material2);
   scene.add(mesh2);
 
@@ -43,6 +40,7 @@ function init() {
   material3 = new THREE.MeshStandardMaterial({
     wireframe: true,
   });
+  material.transparent = true;
   mesh3 = new THREE.Mesh(geometry3, material3);
   scene.add(mesh3);
 
@@ -50,10 +48,11 @@ function init() {
   material4 = new THREE.MeshStandardMaterial({
     wireframe: true,
   });
+  material.transparent = true;
   mesh4 = new THREE.Mesh(geometry4, material4);
   scene.add(mesh4);
 
-  var light = new THREE.PointLight("RGB(255, 255, 255)");
+  var light = new THREE.DirectionalLight("RGB(255, 255,0)", 1.2);
   light.position.set(1, 1, 1);
   scene.add(light);
 
@@ -71,47 +70,39 @@ function init() {
 animate();
 
 function animate() {
-  if (flag) {
-    r += value;
-    g += value;
-    b += value;
-    if (r >= 1) flag = false;
+  if (flag1) {
+    a1 += value;
+    if (a1 >= 1) flag1 = false;
   } else {
-    r -= value;
-    g -= value;
-    b -= value;
-    if (r <= 0) flag = true;
+    a1 -= value;
+    if (a1 <= 0) flag1 = true;
   }
   if (flag2) {
-    r2 += value;
-    g2 += value;
-    b2 += value;
-    if (r2 >= 1) flag2 = false;
+    a2 += value;
+    if (a2 >= 1) flag2 = false;
   } else {
-    r2 -= value;
-    g2 -= value;
-    b2 -= value;
-    if (r2 <= 0) flag2 = true;
+    a2 -= value;
+    if (a2 <= 0) flag2 = true;
   }
 
   requestAnimationFrame(animate);
   mesh.rotation.x += 0.0005;
   mesh.rotation.y += 0.005;
-  material.color.setRGB(r, g, b);
+  material.opacity = a1;
 
   mesh2.rotation.y += 0.001;
   mesh2.rotation.z -= 0.01;
-  material2.color.setRGB(r2, g2, b2);
+  material2.opacity = a2;
 
   mesh3.rotation.x -= 0.001;
   mesh3.rotation.z += 0.01;
-  material3.color.setRGB(1 - r, 1 - g, 1 - b);
+  material3.opacity = 1 - a1;
 
   mesh4.rotation.y -= 0.001;
   mesh4.rotation.z += 0.01;
-  material4.color.setRGB(1 - r2, 1 - g2, 1 - b2);
+  material4.opacity = 1 - a2;
 
   renderer.render(scene, camera);
 
-  // console.log(r + "  " + g + "  " + b);
+  console.log(a1 + "  " + a2);
 }
