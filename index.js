@@ -26,42 +26,40 @@ function init() {
   document.body.appendChild(renderer.domElement);
 
   geometry = new THREE.SphereGeometry(0.5, 64, 64);
-  material = new THREE.MeshBasicMaterial({
+  material = new THREE.MeshStandardMaterial({
     wireframe: true,
   });
   mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
 
   geometry2 = new THREE.SphereGeometry(0.45, 16, 32);
-  material2 = new THREE.MeshBasicMaterial({
+  material2 = new THREE.MeshStandardMaterial({
     wireframe: true,
   });
-
   mesh2 = new THREE.Mesh(geometry2, material2);
   scene.add(mesh2);
 
   geometry3 = new THREE.SphereGeometry(0.35, 8, 16);
-  material3 = new THREE.MeshBasicMaterial({
+  material3 = new THREE.MeshStandardMaterial({
     wireframe: true,
   });
-
   mesh3 = new THREE.Mesh(geometry3, material3);
   scene.add(mesh3);
 
   geometry4 = new THREE.SphereGeometry(0.25, 8, 8);
-  material4 = new THREE.MeshBasicMaterial({
+  material4 = new THREE.MeshStandardMaterial({
     wireframe: true,
   });
-
   mesh4 = new THREE.Mesh(geometry4, material4);
   scene.add(mesh4);
 
-  // var light = new THREE.PointLight(0xffffff, 1, 100);
-  // light.position.set(50, 50, 50);
-  // scene.add(light);
+  var light = new THREE.PointLight("RGB(255, 255, 255)");
+  light.position.set(1, 1, 1);
+  scene.add(light);
+
   // renderer.setClearColor("#ffffff");
   camera = new THREE.PerspectiveCamera(
-    75,
+    70,
     window.innerWidth / window.innerHeight,
     0.01,
     10
@@ -69,6 +67,7 @@ function init() {
   camera.position.z = 1;
 }
 
+// renderer.render(scene, camera);
 animate();
 
 function animate() {
@@ -114,5 +113,5 @@ function animate() {
 
   renderer.render(scene, camera);
 
-  console.log(r + "  " + g + "  " + b);
+  // console.log(r + "  " + g + "  " + b);
 }
