@@ -69,7 +69,7 @@ function animate() {
   }
   if (flag3) {
     l += value;
-    if (l >= 1.2) flag3 = false;
+    if (l >= 1.5) flag3 = false;
   } else {
     l -= value;
     if (l <= 0.3) flag3 = true;
