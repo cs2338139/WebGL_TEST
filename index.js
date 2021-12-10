@@ -1,8 +1,7 @@
 var camera, scene, renderer;
-var geometry, material, mesh;
-var geometry2, material2, mesh2;
-var geometry3, material3, mesh3;
-var geometry4, material4, mesh4;
+var geometry= new Array();
+var material= new Array(); 
+var mesh= new Array();
 var a1, a2, flag1, flag2, value;
 
 init();
@@ -20,37 +19,20 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  geometry = new THREE.SphereGeometry(0.5, 64, 64);
-  material = new THREE.MeshStandardMaterial({
-    wireframe: true,
-  });
-  material.transparent = true;
-  mesh = new THREE.Mesh(geometry, material);
-  scene.add(mesh);
+  geometry[0] = new THREE.SphereGeometry(0.5, 64, 64);
+  geometry[1] = new THREE.SphereGeometry(0.45, 16, 32);
+  geometry[2] = new THREE.SphereGeometry(0.35, 8, 16);
+  geometry[3] = new THREE.SphereGeometry(0.25, 8, 8);
 
-  geometry2 = new THREE.SphereGeometry(0.45, 16, 32);
-  material2 = new THREE.MeshStandardMaterial({
-    wireframe: true,
-  });
-  material.transparent = true;
-  mesh2 = new THREE.Mesh(geometry2, material2);
-  scene.add(mesh2);
-
-  geometry3 = new THREE.SphereGeometry(0.35, 8, 16);
-  material3 = new THREE.MeshStandardMaterial({
-    wireframe: true,
-  });
-  material.transparent = true;
-  mesh3 = new THREE.Mesh(geometry3, material3);
-  scene.add(mesh3);
-
-  geometry4 = new THREE.SphereGeometry(0.25, 8, 8);
-  material4 = new THREE.MeshStandardMaterial({
-    wireframe: true,
-  });
-  material.transparent = true;
-  mesh4 = new THREE.Mesh(geometry4, material4);
-  scene.add(mesh4);
+  for(var i=0;i<4;i++)
+  {
+    material[i] = new THREE.MeshStandardMaterial({
+      wireframe: true,
+    });
+    material[i].transparent = true;
+    mesh[i] = new THREE.Mesh(geometry[i], material[i]);
+    scene.add(mesh[i]);
+  }
 
   var light = new THREE.DirectionalLight("RGB(255, 255,0)", 1.2);
   light.position.set(1, 1, 1);
@@ -86,21 +68,21 @@ function animate() {
   }
 
   requestAnimationFrame(animate);
-  mesh.rotation.x += 0.0005;
-  mesh.rotation.y += 0.005;
-  material.opacity = a1;
+  mesh[0].rotation.x += 0.0005;
+  mesh[0].rotation.y += 0.005;
+  material[0].opacity = a1;
 
-  mesh2.rotation.y += 0.001;
-  mesh2.rotation.z -= 0.01;
-  material2.opacity = a2;
+  mesh[1].rotation.y += 0.001;
+  mesh[1].rotation.z -= 0.01;
+  material[1].opacity = a2;
 
-  mesh3.rotation.x -= 0.001;
-  mesh3.rotation.z += 0.01;
-  material3.opacity = 1 - a1;
+  mesh[2].rotation.x -= 0.001;
+  mesh[2].rotation.z += 0.01;
+  material[2].opacity = 1 - a1;
 
-  mesh4.rotation.y -= 0.001;
-  mesh4.rotation.z += 0.01;
-  material4.opacity = 1 - a2;
+  mesh[3].rotation.y -= 0.001;
+  mesh[3].rotation.z += 0.01;
+  material[3].opacity = 1 - a2;
 
   renderer.render(scene, camera);
 
