@@ -35,7 +35,8 @@ function init() {
     scene.add(mesh[i]);
   }
 
-  light = new THREE.DirectionalLight("RGB(255, 255,0)", 1.2);
+  // light = new THREE.DirectionalLight(0xede900, 1.2);
+  light = new THREE.DirectionalLight("rgb(255, 255, 255)", 1.2);
   light.position.set(1, 1, 1);
   scene.add(light);
 
@@ -47,6 +48,7 @@ function init() {
     10
   );
   camera.position.z = 1;
+
 }
 
 // renderer.render(scene, camera);
@@ -68,10 +70,10 @@ function animate() {
     if (a2 <= 0) flag2 = true;
   }
   if (flag3) {
-    l += value;
+    l += value/2;
     if (l >= 1.5) flag3 = false;
   } else {
-    l -= value;
+    l -= value/2;
     if (l <= 0.3) flag3 = true;
   }
 
@@ -96,5 +98,6 @@ function animate() {
 
   renderer.render(scene, camera);
 
-  console.log(a1 + "  " + a2 + "  " + l);
+  // console.log(a1 + "  " + a2 + "  " + l);
+  // console.log(light.))
 }
